@@ -64,6 +64,7 @@ macro_rules! define_unsigned {
 define_unsigned!( u88,  88);
 define_unsigned!( u96,  96);
 define_unsigned!(u104, 104);
+define_unsigned!(u112, 112);
 define_unsigned!(u120, 120);
 
 
@@ -177,6 +178,8 @@ fn test_uint_wrapping_add_small() {
         "6277101735386680763835789423207666416102355444464034512895");
     assert_eq!(u120::MAX.to_string().as_str(), 
         "1329227995784915872903807060280344575");
+    assert_eq!(u112::MAX.to_string().as_str(), 
+        "5192296858534827628530496329220095");
     assert_eq!(u104::MAX.to_string().as_str(), 
         "20282409603651670423947251286015");
     assert_eq!(u96::MAX.to_string().as_str(), 
@@ -218,7 +221,10 @@ fn test_uint_wrapping_add_small() {
     test_uint!(u88);
     test_uint!(u96);
     test_uint!(u104);
+    test_uint!(u112);
     test_uint!(u120);
+
+    test_uint!(u192);
 }
 
 
@@ -231,9 +237,9 @@ fn bench_u192(b: &mut test::Bencher) {
 }
 
 #[bench]
-fn bench_U192(b: &mut test::Bencher) {
+fn bench_u192_with_u64(b: &mut test::Bencher) {
     b.iter(|| {
-        let mut zero = test::black_box(U256::from(u64::MAX));
+        let zero = test::black_box(U256::from(u64::MAX));
         zero.wrapping_add_small(1)
     })
 }
